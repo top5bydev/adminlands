@@ -1,0 +1,88 @@
+<script src="{{ asset('admin/assets/js/all.js') }}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        var theme = "ace/theme/clouds";
+        var mode = "ace/mode/html";
+        var arrAreas = ['headerc', 'footerc', 'bodyc', 'countersc'];
+        var outAreas = [];
+
+        $.each(arrAreas, function (k, v) {
+            if ($("#" + v).length) {
+                outAreas[v] = ace.edit(v);
+                outAreas[v].setTheme(theme);
+                outAreas[v].getSession().setMode(mode);
+            }
+        });
+
+
+        $('#save_page,#save_site').submit(function (event) {
+            event.preventDefault();
+            var this_form = $(this);
+            $.each(arrAreas, function (k,v) {
+                if ($("#" + v).length) {
+                    var vd = outAreas[v].getValue();
+                    vname = v.substring(0, v.length - 1);
+                    this_form.find('[name='+vname+']').val(vd);
+                    // console.log(vname);
+                    // console.log(vd);
+                }
+            });
+
+            $(this).unbind('submit').submit()
+        });
+
+
+        // var theme = "ace/theme/clouds";
+        // var mode = "ace/mode/html";
+        //
+        //
+        // if ($("#headerc").length) {
+        //     var headerc = ace.edit("headerc");
+        //     headerc.setTheme(theme);
+        //     headerc.getSession().setMode(mode);
+        // }
+        // if ($("#footerc").length) {
+        //     var footerc = ace.edit("footerc");
+        //     footerc.setTheme(theme);
+        //     footerc.getSession().setMode(mode);
+        // }
+        // if ($("#bodyc").length) {
+        //     var bodyc = ace.edit("bodyc");
+        //     bodyc.setTheme(theme);
+        //     bodyc.getSession().setMode(mode);
+        // }
+        // if ($("#countersc").length) {
+        //     var countersc = ace.edit("countersc");
+        //     countersc.setTheme(theme);
+        //     countersc.getSession().setMode(mode);
+        // }
+        //
+        // $('#save_page,#save_site').submit(function (event) {
+        //     event.preventDefault();
+        //
+        //     if ($("#headerc").length) {
+        //         var headerc_data = headerc.getValue();
+        //         $(this).find('[name=header]').val(headerc_data);
+        //     }
+        //     if ($("#footerc").length) {
+        //         var footerc_data = footerc.getValue();
+        //         $(this).find('[name=footer]').val(footerc_data);
+        //     }
+        //     if ($("#bodyc").length) {
+        //         var bodyc_data = bodyc.getValue();
+        //         $(this).find('[name=body]').val(bodyc_data);
+        //     }
+        //     if ($("#countersc").length) {
+        //         var countersc_data = countersc.getValue();
+        //         $(this).find('[name=counters]').val(countersc_data);
+        //     }
+        //
+        // });
+    })(jQuery);
+
+</script>
+
+</body>
+</html>

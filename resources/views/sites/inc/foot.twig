@@ -1,0 +1,9 @@
+{% if page.footer %}
+    {{ page.footer|raw }}
+{% elseif(site.footer) %}
+    <script defer type="text/javascript" src="/{{ site.template }}/assets/js/all.js"></script>
+    {{ site.footer|raw }}
+{% endif %}
+{{ site.counters|raw }}
+</body>
+</html>

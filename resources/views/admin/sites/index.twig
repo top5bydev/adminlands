@@ -1,0 +1,40 @@
+{% extends 'admin.html' %}
+{% block title %}{{ pageTitle|raw }}{% endblock %}
+{% block content %}
+    <a href="{{ route('sites.create') }}" class="btn btn-primary">Добавить еще один сайт</a>
+    <br/>
+    <br/>
+    <table class="table table-striped">
+        <tr class="active">
+            <th></th>
+            <th></th>
+            <th style="width:10%">id</th>
+            <th>Сайт</th>
+            <th>Описание</th>
+            <th>Шаблон</th>
+
+        </tr>
+        {% for site in sites %}
+            <tr>
+                <td>
+                    <a href="{{ route('sites.edit',{'id':site.id}) }}"><i class="fa fa-pencil"
+                                                                          aria-hidden="true"></i></a>
+                    <a href="{{ route('sites.delete',{'id':site.id}) }}"
+                       onclick="return confirm('Вы уверены, что хотите удалить {{ site.name }}?')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('pages.index',{'id':site.id}) }}">
+                        Смотреть страницы
+                    </a>
+                </td>
+                <td>{{ site.id }}</td>
+                <td><a href="{{ route('sites.edit',{'id':site.id}) }}">{{ site.name }}</a></td>
+                <td>{{ site.desc }}</td>
+                <td>{{ site.template }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

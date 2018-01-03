@@ -1,0 +1,12 @@
+{% include 'sites.inc.head' %}
+<title>{{ page.title }}</title>
+<meta name="keywords" content="{{ page.keywords }}">
+<meta name="description"
+      content="{{ page.desc }}">
+
+{% if page.header %}
+    {{ page.header|raw }}
+{% else %}
+    <link href="/{{ site.template }}/assets/css/all.css" media="all" type="text/css" rel="stylesheet">
+    {{ site.header|raw }}
+{% endif %}

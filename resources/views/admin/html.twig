@@ -1,0 +1,29 @@
+{% include 'admin.sections.header' %}
+
+
+<div class="right_col" role="main" style="min-height: 1657px;">
+    <div style="height: 60px"></div>
+    <div class="container">
+        {% for msg in ['danger', 'warning', 'success', 'info'] %}
+            {% if app.session.has('alert-' ~ msg) %}
+                <p class="alert alert-{{ msg }}">{{ app.session.get('alert-' ~ msg)|raw }}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h1>{% block title %}{% endblock %}</h1>
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <div class="pull-right">
+        Developed by <a href="https://vk.com/romua1d">romua1d</a>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+</div>
+</div>
+
+{% include 'admin.sections.footer' %}

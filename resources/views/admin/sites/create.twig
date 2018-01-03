@@ -1,0 +1,158 @@
+{% extends 'admin.html' %}
+{% block title %}{{ pageTitle|raw }}{% endblock %}
+{% block content %}
+    <a href="{{ route('sites.index') }}" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i> Вернуться
+        к списку сайтов</a>
+
+    {% if site.id %}
+        <a target="_blank" href="https://{{ site.name }}" class="btn btn-success">
+            <i class="fa fa-eye" aria-hidden="true"></i> Посмотреть сайт</a>
+    {% endif %}
+    <br/>
+    <br/>
+
+    <div class="col-md-12">
+        <form id="save_site" action="{{ route('sites.create') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+            {% if site.id %}
+                <input type="hidden" name="site_id" value="{{ site.id }}">
+            {% endif %}
+            <div class="panel panel-info">
+                <div class="panel-heading">Основные параметры</div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Урл сайта, очень важен, чтобы корректно работали шаблоны
+                                <input name="name" class="form-control" type="text"
+                                       value="{% if site.name %}{{ site.name }}{% endif %}" placeholder="Урл сайта"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Папка, в которой находятся файлы сайта ( resources/views )
+                                <input name="template" class="form-control" type="text"
+                                       value="{% if site.template %}{{ site.template }}{% endif %}"
+                                       placeholder="Папка сайта"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Контент сайта</div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Шапка сайта (стили, скрипты, сквозной блок)</label>
+                            <div id="headerc" class="editor_wrapp">{% if site.header %}{{ site.header }}{% endif %}</div>
+                            <input name="header" class="form-control" type="hidden">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Тело сайта (Блоки, секции)</label>
+                            <div id="bodyc" class="editor_wrapp">{% if site.body %}{{ site.body }}{% endif %}</div>
+                            <input name="body" class="form-control" type="hidden">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Футер сайта (скрипты, сквозной блок)</label>
+                            <div id="footerc" class="editor_wrapp">{% if site.footer %}{{ site.footer }}{% endif %}</div>
+                            <input name="footer" class="form-control" type="hidden">
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+
+                                <div class="panel">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                Сео настройки
+                                            </a>
+                                        </h4>
+
+                                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingOne">
+                                            <div class="panel-body">
+
+                                                <div class="col-md-12">
+                                                    <h4>Сео meta теги</h4>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Title главной страницы
+                                                            <input name="title" class="form-control" type="text"
+                                                                   value="{% if site.title %}{{ site.title }}{% endif %}"
+                                                                   placeholder="Title"
+                                                                   required>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Описание, вставляется в meta=desctiption
+                                                            <textarea name="desc" class="form-control" type="text"
+                                                                      placeholder="description"
+                                                                      required>{% if site.desc %}{{ site.desc }}{% endif %}</textarea>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Ключевые слова для meta=keywords
+                                                            <input name="keywords" class="form-control" type="text"
+                                                                   value="{% if site.keywords %}{{ site.keywords }}{% endif %}"
+                                                                   placeholder="keywords"
+                                                                   required>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <h4>Счетчики аналитики и другие коды (yandex metrika, google
+                                                            analytics)</h4>
+                                                        <div id="countersc"
+                                                             class="editor_wrapp">{% if site.counters %}{{ site.counters }}{% endif %}</div>
+                                                        <input name="counters" class="form-control" type="hidden">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <input type="submit" name='save' class="btn btn-default" value="Сохранить"/>
+
+                        {% if site.id %}
+                            <a href="{{ route('sites.delete',{'id':site.id}) }}" class="btn btn-danger"
+                               onclick="return confirm('Вы уверены, что хотите удалить {{ site.name }}?')">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {#'/delete/' ~  ~ '?_token='~ csrf_token())#}
+        </form>
+
+        <style>
+            .editor_wrapp {
+                width: 100%;
+                height: 300px;
+            }
+        </style>
+
+
+        <div class="clerfix"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'admin.html' %}
+{% block title %}{{ pageTitle|raw }}{% endblock %}
+{% block content %}
+    <a href="{{ route('sites.index') }}" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i> Вернуться
+        к списку сайтов</a>
+    <a href="{{ route('pages.index',{'id':site.id}) }}" class="btn btn-primary"><i class="fa fa-undo"
+                                                                                   aria-hidden="true"></i> Вернуться к
+        списку страниц</a>
+
+    {% if page.slug %}
+        <a target="_blank" href="https://{{ site.name }}/{{ page.slug }}" class="btn btn-success">
+            <i class="fa fa-eye" aria-hidden="true"></i> Посмотреть страницу</a>
+    {% endif %}
+
+    <br/>
+    <br/>
+
+    <div class="col-md-12">
+        <form id="save_page" action="{{ route('pages.create',{'id':site.id}) }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+            {% if page.id %}
+                <input type="hidden" name="page_id" value="{{ page.id }}">
+            {% endif %}
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Основные параметры</div>
+                <div class="panel-body">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Заголовок сайта для админки
+                                <input name="name" class="form-control" type="text"
+                                       value="{% if page.name %}{{ page.name }}{% endif %}"
+                                       placeholder="Название для админки"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Сайт, которому принадлежит страница
+                                <input class="form-control" type="text"
+                                       value="{% if site.name %}{{ site.name }}{% endif %}"
+                                       disabled>
+                                <input type="hidden" name="site_id" value="{{ site.id }}">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Слаг, по которому будет доступна страница
+                                <input name="slug" class="form-control" type="text"
+                                       value="{% if page.slug %}{{ page.slug }}{% endif %}" placeholder="slug"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Сео параметры</div>
+                <div class="panel-body">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Title главной страницы
+                                <input name="title" class="form-control" type="text"
+                                       value="{% if page.title %}{{ page.title }}{% endif %}" placeholder="Title"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Описание, вставляется в meta=description
+                                <textarea name="description" class="form-control" type="text"
+                                          placeholder="description"
+                                          required>{% if page.description %}{{ page.description }}{% endif %}</textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Ключевые слова для meta=keywords
+                                <input name="keywords" class="form-control" type="text"
+                                       value="{% if page.keywords %}{{ page.keywords }}{% endif %}"
+                                       placeholder="keywords"
+                                       required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                    <div class="col-md-12">
+                        <h4>Контент сайта</h4>
+
+                        <div class="form-group">
+                            <label>Тело страницы (Блоки, секции)</label>
+                            <div id="bodyc" class="editor_wrapp">{% if page.body %}{{ page.body }}{% endif %}</div>
+                            <input name="body" class="form-control" type="hidden">
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+            <div class="col-md-12">
+                <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+
+                    <div class="panel">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Перезапись HEADER и FOOTER
+                                </a>
+                            </h4>
+
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    <div class="col-md-12">
+                                        <h4>Сео meta теги</h4>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <h4>Header</h4>
+                                            <div id="headerc"
+                                                 class="editor_wrapp">{% if page.header %}{{ page.header }}{% endif %}</div>
+                                            <input name="header" class="form-control" type="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <h4>footer</h4>
+                                            <div id="footerc"
+                                                 class="editor_wrapp">{% if page.footer %}{{ page.footer }}{% endif %}</div>
+                                            <input name="footer" class="form-control" type="hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <input type="submit" name='save' class="btn btn-primary" value="Сохранить"/>
+
+            {% if site.id %}
+                <a href="{{ route('sites.delete',{'id':site.id}) }}" class="btn btn-danger"
+                   onclick="return confirm('Вы уверены, что хотите удалить {{ site.name }}?')">Удалить</a>
+            {% endif %}
+
+
+
+            {#'/delete/' ~  ~ '?_token='~ csrf_token())#}
+        </form>
+
+        <style>
+            .editor_wrapp {
+                width: 100%;
+                height: 300px;
+            }
+        </style>
+
+
+    </div>
+{% endblock %}

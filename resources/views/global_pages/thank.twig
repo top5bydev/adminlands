@@ -1,0 +1,77 @@
+<html>
+<head>
+    <title>Спасибо за заявку</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://cdn.moiokna.by/thankyoupage/favicon.ico">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/litera/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style>
+        .fa-bounce {
+            display: inline-block;
+            position: relative;
+            -moz-animation: bounce 1s infinite linear;
+            -o-animation: bounce 1s infinite linear;
+            -webkit-animation: bounce 1s infinite linear;
+            animation: bounce 1s infinite linear;
+        }
+
+        @-webkit-keyframes bounce {
+            0% { top: 0; }
+            50% { top: -0.2em; }
+            70% { top: -0.3em; }
+            100% { top: 0; }
+        }
+        @-moz-keyframes bounce {
+            0% { top: 0; }
+            50% { top: -0.2em; }
+            70% { top: -0.3em; }
+            100% { top: 0; }
+        }
+        @-o-keyframes bounce {
+            0% { top: 0; }
+            50% { top: -0.2em; }
+            70% { top: -0.3em; }
+            100% { top: 0; }
+        }
+        @-ms-keyframes bounce {
+            0% { top: 0; }
+            50% { top: -0.2em; }
+            70% { top: -0.3em; }
+            100% { top: 0; }
+        }
+        @keyframes bounce {
+            0% { top: 0; }
+            50% { top: -0.2em; }
+            70% { top: -0.3em; }
+            100% { top: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron text-xs-center">
+    <div class="container">
+        <h1 class="display-3"><i class="fa fa-check-circle fa-bounce" aria-hidden="true"></i> Успешно!</h1>
+        <p class="lead"><strong>Заявка успешно отправлена</strong>.
+            В ближайшее время с Вами свяжется наш менеджер</p>
+        <p class="lead">
+            Спасибо за то, что выбрали нас.</p>
+        <hr>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="window.history.back()">
+                <i class="fa fa-undo" aria-hidden="true"></i> Вернуться
+            </a>
+        </p>
+    </div>
+</div>
+<script>
+    (function(){
+        setTimeout(function(){
+            window.history.back();
+        },15000); /* 1000 = 1 second*/
+    })();
+</script>
+{{ site.counters|raw }}
+</body>
+</html>

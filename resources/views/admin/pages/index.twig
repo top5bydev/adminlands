@@ -1,0 +1,36 @@
+{% extends 'admin.html' %}
+{% block title %}{{ pageTitle|raw }}{% endblock %}
+{% block content %}
+    <a href="{{ route('pages.create',{ 'id':site.id }) }}" class="btn btn-primary">Добавить еще одну страницу</a>
+    <br/>
+    <br/>
+    <table class="table table-striped">
+        <tr class="active">
+            <th></th>
+            <th style="width:10%">id</th>
+            <th>Страница</th>
+            <th>Описание</th>
+        </tr>
+        {% for page in pages %}
+            <tr>
+                <td>
+                    <a href="{{ route('pages.edit',{'id':site.id,'pid':page.id}) }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a href="{{ route('pages.delete',{'id':site.id,'pid':page.id}) }}"
+                       onclick="return confirm('Вы уверены, что хотите удалить {{ page.name }}?')">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td>
+                    {{ page.id }}
+                </td>
+                <td>
+                    <a href="{{ route('pages.edit',{'id':site.id,'pid':page.id}) }}">{{ page.name }}</a>
+                </td>
+                <td>{{ page.description }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
